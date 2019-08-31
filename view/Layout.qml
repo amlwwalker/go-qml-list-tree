@@ -13,7 +13,9 @@ Rectangle {
         model: ContactModel {}
         delegate: Component {
             id: contactDelegate
-            Card {}
+            Card {
+                // model: model
+            }
         }
         highlight: Rectangle { color: "lightpink"; radius: 5 }
     }
