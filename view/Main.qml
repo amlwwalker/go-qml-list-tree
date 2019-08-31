@@ -11,6 +11,8 @@ ApplicationWindow {
     width: 800; height: 1000
     title: "TreeView Example"
     visible: true
-
+    Rectangle {
+      height: 5
+    }
   Layout{}
 }

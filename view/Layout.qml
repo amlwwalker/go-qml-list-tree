@@ -1,5 +1,27 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+
+
+// import QtQuick 2.0
+
+// Rectangle {
+//     id: root
+//     anchors.fill: parent
+//     GridView {
+//         id: grid
+//         anchors.fill: parent
+//         anchors.margins: 5
+//         cellWidth: parent.width - 10; cellHeight: 80
+//         // spacing: 10
+//         model: ContactModel {}
+//         delegate: Component {
+//             id: contactDelegate
+//             Card {}
+//         }
+//         highlight: Rectangle { color: "lightpink"; radius: 5 }
+//     }
+// }
+
 Item{
     id: root
     width: 800; height: 1000
@@ -73,14 +95,15 @@ Item{
         width: parent.width
         height: parent.height
         model: contactModel
-        
+        anchors.margins: 5
         //the delegate for the sub menu
         delegate: listdelegate
-        
+        spacing: 10
         section.property: "name"
         section.criteria: ViewSection.FullString
         //the delegate for top level animals
         section.delegate: sectionHeader
+        // highlight: Rectangle { color: "lightpink"; radius: 5 }
     }
     Component {
         id: listdelegate
@@ -130,11 +153,11 @@ Item{
                         }
                     }
                     Column {
-                    anchors.fill: parent
-                    padding: 5
-                    spacing: 10
-                    Text { text: "Name"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
-                    Text { text: name; anchors.horizontalCenter: parent.horizontalCenter; }
+                        anchors.fill: parent
+                        padding: 5
+                        spacing: 10
+                        Text { text: "Name"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                        Text { text: name; anchors.horizontalCenter: parent.horizontalCenter; }
                     }
                 }
                 Rectangle {
