@@ -98,34 +98,5 @@ GridLayout {
           Text { text: createdAt; anchors.horizontalCenter: parent.horizontalCenter; }
         }
     }
-    // Rectangle {
-    //     id : greenRect
-    //     color : 'green'
-    //     Layout.rowSpan : 2
-    //     Layout.columnSpan : 12
-    //     Layout.preferredWidth  : gridLayout.prefWidth(this)
-    //     Layout.preferredHeight : gridLayout.prefHeight(this)
-    //     Text { text: name; anchors.horizontalCenter: parent.horizontalCenter }
-    // }
-}
-    // ColumnLayout {
-    //     anchors.fill: parent
-    // Row {
-    //   anchors.fill: parent
-    // Column {
-    //   anchors.fill: parent
-    //     // Image { source: portrait; anchors.horizontalCenter: parent.horizontalCenter }
-    //     Text { text: name; anchors.horizontalCenter: parent.horizontalCenter }
-    //     Text { text: portrait; anchors.horizontalCenter: parent.horizontalCenter }
-    // }
-    // }
-    // Row {
-    //   anchors.fill: parent
-    // Column {
-    //     anchors.fill: parent
-    //     Text { text: createdAt; anchors.horizontalCenter: parent.horizontalCenter }
-    //     Text { text: size; anchors.horizontalCenter: parent.horizontalCenter }
-    // }
-    // }
-    // }
+  }
 }
