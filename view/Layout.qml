@@ -28,17 +28,45 @@ Item{
     ListModel {
         id: contactModel
         ListElement {
-            name: "Jim Williams"
-            portrait: "pics/portrait.png"
+            name: "James Bond"
+            portrait: "pics/007.png"
             createdAt: "12-06-2018"
             size: "16MB"
             aVisible: false
         }
         ListElement {
-            name: "john Brown"
-            portrait: "pics/portrait.png"
+            name: "James Bond"
+            portrait: "pics/006.png"
+            createdAt: "13-06-2018"
+            size: "18MB"
+            aVisible: false
+        }     
+        ListElement {
+            name: "Jim Williams"
+            portrait: "pics/williams.png"
             createdAt: "12-06-2018"
             size: "16MB"
+            aVisible: false
+        }
+        ListElement {
+            name: "Jim Williams"
+            portrait: "pics/Jim.png"
+            createdAt: "13-06-2018"
+            size: "18MB"
+            aVisible: false
+        }     
+        ListElement {
+            name: "John Brown"
+            portrait: "pics/brown.png"
+            createdAt: "12-06-2018"
+            size: "16MB"
+            aVisible: false
+        }
+        ListElement {
+            name: "John Brown"
+            portrait: "pics/john.png"
+            createdAt: "13-06-2018"
+            size: "18MB"
             aVisible: false
         }        
     }
@@ -46,18 +74,33 @@ Item{
         id: sectionHeader
         
         Rectangle {
-            id: testRect
+            id: sectionRectangle
             width: root.width
-            color:"white"
+            color:"lightpink"
             height: 50
             border.color: "hotpink"
-            Text {
-                text: section
-                anchors.centerIn: parent
+            // color: model.index % 2 == 0 ? "hotpink" : "#eee"
+            Row {
+                Text {
+                    text: section
+                    // anchors.centerIn: parent
+                }
             }
             
             MouseArea{
                 anchors.fill: parent
+                hoverEnabled: true
+                onEntered: {
+                    // grid.currentIndex = model.index
+                    // if (entered) {
+                    sectionRectangle.border.color = "black"
+                    sectionRectangle.border.width = 2
+                    // }
+                }
+                onExited: {
+                    sectionRectangle.border.color = "hotpink"
+                    sectionRectangle.border.width = 1
+                }
                 onClicked: {
                     console.log("parent clicked ", contactModel.count);
                     for(var i=0; i<contactModel.count; i++)
@@ -70,18 +113,18 @@ Item{
                         if(contact.name === section && contact.aVisible == false) {
                             console.log("true", contact.name, section)
                             contact.aVisible = true;
-                            testRect.color = "#ddd"
+                            sectionRectangle.color = "#ddd"
                         }
                         //otherwise hide it and set it back to green.
                         else if (contact.name === section && contact.aVisible == true) {
                             console.log("true", contact.name, section)
                             contact.aVisible = false;
-                            testRect.color = "white"
+                            sectionRectangle.color = "lightpink"
                         }
                         
                         else {
                             // contact.aVisible = false;
-                            //                            testRect.color = "green" //makes everything green
+                            //                            sectionRectangle.color = "green" //makes everything green
                         }
                     }
                 }
@@ -98,7 +141,7 @@ Item{
         anchors.margins: 5
         //the delegate for the sub menu
         delegate: listdelegate
-        spacing: 10
+        spacing: 2
         section.property: "name"
         section.criteria: ViewSection.FullString
         //the delegate for top level animals
@@ -108,13 +151,23 @@ Item{
     Component {
         id: listdelegate
             //when visible set its height
+            // Rectangle {
+            //     anchors.fill: parent
+            //     color: "transparent"
+            //     // anchors.horizontalCenter: parent.horizontalCenter
+            //     // anchors.verticalCenter: parent.verticalCenter
+            //     // width: parent.width//styleData.selected ? parent.width / 2 : 0
+            //     // height: parent.height//styleData.selected ? parent.height / 2 : 0
+            // MouseArea {
+            //     anchors.fill: parent
+            //     onClicked: {
+            //         console.log(styleData.date.getDate())
+            //     }
+            // }
             GridLayout {
                 id : gridLayout
                 width: root.width
-                // anchors.fill: parent
                 anchors.top: sectionHeader.bottom
-                anchors.leftMargin: 20; 
-                anchors.rightMargin: 20
                 visible: aVisible
                 onVisibleChanged: {
                     if(visible)
@@ -122,7 +175,6 @@ Item{
                     else
                         height = 0;
                 }
-                // border.color: "hotPink"
                 anchors.margins: 10;
                 //animate the change when its expanded
                 Behavior on height {
@@ -141,7 +193,7 @@ Item{
 
                 Rectangle {
                     color : 'transparent'
-                    Layout.rowSpan   : 10
+                    Layout.rowSpan   : 12
                     Layout.columnSpan: 3
                     Layout.preferredWidth  : gridLayout.prefWidth(this)
                     Layout.preferredHeight : gridLayout.prefHeight(this)
@@ -162,7 +214,7 @@ Item{
                 }
                 Rectangle {
                     color : 'transparent'
-                    Layout.rowSpan   : 10
+                    Layout.rowSpan   : 12
                     Layout.columnSpan: 3
                     Layout.preferredWidth  : gridLayout.prefWidth(this)
                     Layout.preferredHeight : gridLayout.prefHeight(this)
@@ -176,7 +228,7 @@ Item{
                 }
                 Rectangle {
                     color : 'transparent'
-                    Layout.rowSpan   : 10
+                    Layout.rowSpan   : 12
                     Layout.columnSpan: 3
                     Layout.preferredWidth  : gridLayout.prefWidth(this)
                     Layout.preferredHeight : gridLayout.prefHeight(this)
@@ -190,7 +242,7 @@ Item{
                 }
                 Rectangle {
                     color : 'transparent'
-                    Layout.rowSpan   : 10
+                    Layout.rowSpan   : 12
                     Layout.columnSpan: 3
                     Layout.preferredWidth  : gridLayout.prefWidth(this)
                     Layout.preferredHeight : gridLayout.prefHeight(this)
@@ -198,11 +250,12 @@ Item{
                     anchors.fill: parent
                     padding: 5
                     spacing: 10
-                    Text { text: "Created At"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
-                    Text { text: createdAt; anchors.horizontalCenter: parent.horizontalCenter; }
+                    Text { text: "Portrait"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                    Text { text: portrait; anchors.horizontalCenter: parent.horizontalCenter; }
                     }
                 }
-            }
+            // }
+        }
     }
     //the component for the sub sections
     // Component {
