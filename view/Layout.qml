@@ -1,22 +1,222 @@
-
-import QtQuick 2.0
-
-Rectangle {
+import QtQuick 2.6
+import QtQuick.Layouts 1.3
+Item{
     id: root
-    anchors.fill: parent
-    GridView {
-        id: grid
-        anchors.fill: parent
-        anchors.margins: 5
-        cellWidth: parent.width - 10; cellHeight: 80
-        // spacing: 10
-        model: ContactModel {}
-        delegate: Component {
-            id: contactDelegate
-            Card {
-                // model: model
+    width: 800; height: 1000
+    ListModel {
+        id: contactModel
+        ListElement {
+            name: "Jim Williams"
+            portrait: "pics/portrait.png"
+            createdAt: "12-06-2018"
+            size: "16MB"
+            aVisible: false
+        }
+        ListElement {
+            name: "john Brown"
+            portrait: "pics/portrait.png"
+            createdAt: "12-06-2018"
+            size: "16MB"
+            aVisible: false
+        }        
+    }
+    Component {
+        id: sectionHeader
+        
+        Rectangle {
+            id: testRect
+            width: root.width
+            color:"white"
+            height: 50
+            border.color: "hotpink"
+            Text {
+                text: section
+                anchors.centerIn: parent
+            }
+            
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    console.log("parent clicked ", contactModel.count);
+                    for(var i=0; i<contactModel.count; i++)
+                    {
+                        //get this element from the list model
+                        var contact = contactModel.get(i);
+                        //if the type of this animal, is equal to the current section
+                        //and this animal is not visible,
+                        //make it visible and colour it red
+                        if(contact.name === section && contact.aVisible == false) {
+                            console.log("true", contact.name, section)
+                            contact.aVisible = true;
+                            testRect.color = "#ddd"
+                        }
+                        //otherwise hide it and set it back to green.
+                        else if (contact.name === section && contact.aVisible == true) {
+                            console.log("true", contact.name, section)
+                            contact.aVisible = false;
+                            testRect.color = "white"
+                        }
+                        
+                        else {
+                            // contact.aVisible = false;
+                            //                            testRect.color = "green" //makes everything green
+                        }
+                    }
+                }
             }
         }
-        highlight: Rectangle { color: "lightpink"; radius: 5 }
     }
+    
+    
+    ListView {
+        id: listing
+        width: parent.width
+        height: parent.height
+        model: contactModel
+        
+        //the delegate for the sub menu
+        delegate: listdelegate
+        
+        section.property: "name"
+        section.criteria: ViewSection.FullString
+        //the delegate for top level animals
+        section.delegate: sectionHeader
+    }
+    Component {
+        id: listdelegate
+            //when visible set its height
+            GridLayout {
+                id : gridLayout
+                width: root.width
+                // anchors.fill: parent
+                anchors.top: sectionHeader.bottom
+                anchors.leftMargin: 20; 
+                anchors.rightMargin: 20
+                visible: aVisible
+                onVisibleChanged: {
+                    if(visible)
+                        height = 55;
+                    else
+                        height = 0;
+                }
+                // border.color: "hotPink"
+                anchors.margins: 10;
+                //animate the change when its expanded
+                Behavior on height {
+                    NumberAnimation { duration: 150 }
+                }            
+                rows    : 12
+                columns : 12
+                property double colMulti : gridLayout.width / gridLayout.columns
+                property double rowMulti : gridLayout.height / gridLayout.rows
+                function prefWidth(item){
+                    return colMulti * item.Layout.columnSpan
+                }
+                function prefHeight(item){
+                    return rowMulti * item.Layout.rowSpan
+                }
+
+                Rectangle {
+                    color : 'transparent'
+                    Layout.rowSpan   : 10
+                    Layout.columnSpan: 3
+                    Layout.preferredWidth  : gridLayout.prefWidth(this)
+                    Layout.preferredHeight : gridLayout.prefHeight(this)
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            listing.currentIndex = index;
+                            console.log("clicked index ", listing.currentIndex)
+                        }
+                    }
+                    Column {
+                    anchors.fill: parent
+                    padding: 5
+                    spacing: 10
+                    Text { text: "Name"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                    Text { text: name; anchors.horizontalCenter: parent.horizontalCenter; }
+                    }
+                }
+                Rectangle {
+                    color : 'transparent'
+                    Layout.rowSpan   : 10
+                    Layout.columnSpan: 3
+                    Layout.preferredWidth  : gridLayout.prefWidth(this)
+                    Layout.preferredHeight : gridLayout.prefHeight(this)
+                    Column {
+                    anchors.fill: parent
+                    padding: 5
+                    spacing: 10
+                    Text { text: "FileSize"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                    Text { text: size; anchors.horizontalCenter: parent.horizontalCenter; }
+                    }
+                }
+                Rectangle {
+                    color : 'transparent'
+                    Layout.rowSpan   : 10
+                    Layout.columnSpan: 3
+                    Layout.preferredWidth  : gridLayout.prefWidth(this)
+                    Layout.preferredHeight : gridLayout.prefHeight(this)
+                    Column {
+                    anchors.fill: parent
+                    padding: 5
+                    spacing: 10
+                    Text { text: "Created At"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                    Text { text: createdAt; anchors.horizontalCenter: parent.horizontalCenter; }
+                    }
+                }
+                Rectangle {
+                    color : 'transparent'
+                    Layout.rowSpan   : 10
+                    Layout.columnSpan: 3
+                    Layout.preferredWidth  : gridLayout.prefWidth(this)
+                    Layout.preferredHeight : gridLayout.prefHeight(this)
+                    Column {
+                    anchors.fill: parent
+                    padding: 5
+                    spacing: 10
+                    Text { text: "Created At"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                    Text { text: createdAt; anchors.horizontalCenter: parent.horizontalCenter; }
+                    }
+                }
+            }
+    }
+    //the component for the sub sections
+    // Component {
+    //     id: listdelegate
+        
+    //     Rectangle {
+    //         id: menuItem
+    //         width: 181
+    //         //height: 55
+    //         color: ListView.isCurrentItem ? "lightblue" : "white"
+    //         visible: aVisible
+            
+    //         //when visible set its height
+    //         onVisibleChanged: {
+    //             if(visible)
+    //                 height = 55;
+    //             else
+    //                 height = 0;
+    //         }
+            
+    //         //animate the change when its expanded
+    //         Behavior on height {
+    //             NumberAnimation { duration: 150 }
+    //         }
+            
+    //         Text {
+    //             id: text
+    //             text: portrait
+    //             anchors.centerIn: parent
+    //         }
+            
+    //         MouseArea {
+    //             anchors.fill: parent
+    //             onClicked: {
+    //                 listing.currentIndex = index;
+    //             }
+    //         }
+    //     }
+    // }
 }

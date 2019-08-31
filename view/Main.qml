@@ -8,7 +8,7 @@ import "."
 
 ApplicationWindow {
     id: window
-    width: 800; height: 600
+    width: 800; height: 1000
     title: "TreeView Example"
     visible: true
 
