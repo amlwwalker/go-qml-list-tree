@@ -80,12 +80,11 @@ Item{
             height: 50
             border.color: "hotpink"
             // color: model.index % 2 == 0 ? "hotpink" : "#eee"
-            Row {
                 Text {
                     text: section
-                    // anchors.centerIn: parent
+                    anchors.centerIn: parent
                 }
-            }
+            
             
             MouseArea{
                 anchors.fill: parent
@@ -254,45 +253,6 @@ Item{
                     Text { text: portrait; anchors.horizontalCenter: parent.horizontalCenter; }
                     }
                 }
-            // }
         }
     }
-    //the component for the sub sections
-    // Component {
-    //     id: listdelegate
-        
-    //     Rectangle {
-    //         id: menuItem
-    //         width: 181
-    //         //height: 55
-    //         color: ListView.isCurrentItem ? "lightblue" : "white"
-    //         visible: aVisible
-            
-    //         //when visible set its height
-    //         onVisibleChanged: {
-    //             if(visible)
-    //                 height = 55;
-    //             else
-    //                 height = 0;
-    //         }
-            
-    //         //animate the change when its expanded
-    //         Behavior on height {
-    //             NumberAnimation { duration: 150 }
-    //         }
-            
-    //         Text {
-    //             id: text
-    //             text: portrait
-    //             anchors.centerIn: parent
-    //         }
-            
-    //         MouseArea {
-    //             anchors.fill: parent
-    //             onClicked: {
-    //                 listing.currentIndex = index;
-    //             }
-    //         }
-    //     }
-    // }
 }
