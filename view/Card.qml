@@ -3,7 +3,26 @@ import QtQuick 2.6
 Item{
     id: root
     width: 1406; height: 536
+    Rectangle {
+      id: borderRectangle
+      anchors.fill: parent
+      anchors.margins: 5
+      border.color: "hotpink"
+      MouseArea {
+          id: mouseRegion
+          anchors.fill: parent
+          hoverEnabled: true
+          onEntered: {
+            grid.currentIndex = model.index
+            if (pressed) {
+              borderRectangle.border.color = "black"
+            } else {
+              borderRectangle.border.color = "hotpink"
+            }
+          }
 
+      }
+    }
     Component {
         id: sectionHeader
         
