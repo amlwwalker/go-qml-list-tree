@@ -7,12 +7,14 @@ Component {
     Rectangle {
         id: sectionRectangle
         width: root.width
-        color:"lightpink"
+        color:"white"
         height: 50
         border.color: "hotpink"
         Text {
             text: section
             anchors.centerIn: parent
+            color: "black"
+            font.bold: true
         }
         MouseArea{
             anchors.fill: parent
@@ -42,7 +44,7 @@ Component {
                     else if (contact.name === section && contact.aVisible == true) {
                         console.log("true", contact.name, section)
                         contact.aVisible = false;
-                        sectionRectangle.color = "lightpink"
+                        sectionRectangle.color = "white"
                     }
                     
                     else { //if you want to close all others when selecting one

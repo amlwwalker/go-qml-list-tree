@@ -48,7 +48,7 @@ Item{
                 function prefHeight(item){
                     return rowMulti * item.Layout.rowSpan
                 }
-
+                
                 Rectangle {
                     color : 'transparent'
                     Layout.rowSpan   : 12
