@@ -32,15 +32,12 @@ Component {
                 {
                     //get this element from the list model
                     var contact = listing.model.get(i);
-                    //if the type of this animal, is equal to the current section
-                    //and this animal is not visible,
-                    //make it visible and colour it red
                     if(contact.name === section && contact.aVisible == false) {
                         console.log("true", contact.name, section)
                         contact.aVisible = true;
                         sectionRectangle.color = "#ddd"
                     }
-                    //otherwise hide it and set it back to green.
+                    //otherwise hide it and set it back
                     else if (contact.name === section && contact.aVisible == true) {
                         console.log("true", contact.name, section)
                         contact.aVisible = false;
