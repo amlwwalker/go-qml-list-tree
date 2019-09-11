@@ -22,8 +22,8 @@ Item{
     }
     Component {
         id: listdelegate
-            GridLayout {
-                id : gridLayout
+            ColumnLayout {
+                id : columnLayout
                 width: root.width
                 anchors.top: sectionHeader.bottom
                 visible: aVisible
@@ -38,92 +38,121 @@ Item{
                 Behavior on height {
                     NumberAnimation { duration: 150 }
                 }            
-                rows    : 12
-                columns : 12
-                property double colMulti : gridLayout.width / gridLayout.columns
-                property double rowMulti : gridLayout.height / gridLayout.rows
+                // rows    : 12
+                // columns : 12
+                property double colMulti : columnLayout.width / columnLayout.columns
+                property double rowMulti : columnLayout.height / columnLayout.rows
                 function prefWidth(item){
-                    return colMulti * item.Layout.columnSpan
+                    // return colMulti * item.Layout.columnSpan
+                    return columnLayout.width / (5.2)
                 }
                 function prefHeight(item){
-                    return rowMulti * item.Layout.rowSpan
-                }
-                
+                    // return rowMulti * item.Layout.rowSpan
+                    return 55
+                }   
                 Rectangle {
-                    color : 'transparent'
-                    Layout.rowSpan   : 12
-                    Layout.columnSpan: 2
-                    Layout.preferredWidth  : gridLayout.prefWidth(this)
-                    Layout.preferredHeight : gridLayout.prefHeight(this)
+                    id: rowBackground
+                    color: "transparent"
+                    // Layout.leftMargin: 30
+                    Layout.preferredWidth  : parent.width
+                    Layout.preferredHeight : parent.height
                     MouseArea {
+                        hoverEnabled: true
                         anchors.fill: parent
-                        onClicked: {
+                        onPressed: {
                             listing.currentIndex = index;
-                            console.log("clicked index ", listing.currentIndex)
+                            console.log("pressed index ", listing.currentIndex)
+                        }
+                        onReleased: {
+                            console.log("released")
+                        }
+                        onEntered: {
+                            rowBackground.color = "lightblue"
+                            // sectionRectangle.border.width = 2
+                        }
+                        onExited: {
+                            rowBackground.color = "transparent"
+                            // sectionRectangle.border.width = 1
                         }
                     }
-                    Column {
-                        anchors.fill: parent
-                        padding: 5
-                        spacing: 10
-                        Text { text: "Name"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
-                        Text { text: name; anchors.horizontalCenter: parent.horizontalCenter; }
+                    RowLayout {
+                        Rectangle {
+                            color : 'transparent'
+                            // Layout.rowSpan   : 12
+                            // Layout.columnSpan: 2
+                            Layout.preferredWidth  : columnLayout.prefWidth(this)
+                            Layout.preferredHeight : columnLayout.prefHeight(this)
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    listing.currentIndex = index;
+                                }
+                            }
+                            Column {
+                                anchors.fill: parent
+                                padding: 5
+                                spacing: 10
+                                Text { text: "Name"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                                Text { text: name; anchors.horizontalCenter: parent.horizontalCenter; }
+                            }
+                        }
+                        Rectangle {
+                            color : 'transparent'
+                            // Layout.rowSpan   : 12
+                            // Layout.columnSpan: 2
+                            Layout.preferredWidth  : columnLayout.prefWidth(this)
+                            Layout.preferredHeight : columnLayout.prefHeight(this)
+                            Column {
+                            anchors.fill: parent
+                            padding: 5
+                            spacing: 10
+                            Text { text: "FileSize"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                            Text { text: size; anchors.horizontalCenter: parent.horizontalCenter; }
+                            }
+                        }
+                        Rectangle {
+                            color : 'transparent'
+                            // Layout.rowSpan   : 12
+                            // Layout.columnSpan: 2
+                            Layout.preferredWidth  : columnLayout.prefWidth(this)
+                            Layout.preferredHeight : columnLayout.prefHeight(this)
+                            Column {
+                            anchors.fill: parent
+                            padding: 5
+                            spacing: 10
+                            Text { text: "Created At"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                            Text { text: createdAt; anchors.horizontalCenter: parent.horizontalCenter; }
+                            }
+                        }
+                        Rectangle {
+                            color : 'transparent'
+                            // Layout.rowSpan   : 12
+                            // Layout.columnSpan: 2
+                            Layout.preferredWidth  : columnLayout.prefWidth(this)
+                            Layout.preferredHeight : columnLayout.prefHeight(this)
+                            Column {
+                            anchors.fill: parent
+                            padding: 5
+                            spacing: 10
+                            Text { text: "Portrait"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
+                            Text { text: portrait; anchors.horizontalCenter: parent.horizontalCenter; }
+                            }
+                        }
+                        Rectangle {
+                            color : 'transparent'
+                            // Layout.rowSpan   : 12
+                            // Layout.columnSpan: 2
+                            Layout.preferredWidth  : columnLayout.prefWidth(this)
+                            Layout.preferredHeight : columnLayout.prefHeight(this)
+                            Row {
+                                anchors.fill: parent
+                                Image { source: "./assets/android-contact.png"; anchors.verticalCenter: parent.verticalCenter; width: parent.width * 0.3; height:parent.height * 0.3; fillMode: Image.PreserveAspectFit;}
+                                Image { source: "./assets/close-round.png"; anchors.verticalCenter: parent.verticalCenter; width: parent.width * 0.3; height:parent.height * 0.3; fillMode: Image.PreserveAspectFit}
+                                Image { source: "./assets/eye.png"; anchors.verticalCenter: parent.verticalCenter; width: parent.width * 0.4; height:parent.height * 0.4; fillMode: Image.PreserveAspectFit}
+                            }
+                        }
                     }
-                }
-                Rectangle {
-                    color : 'transparent'
-                    Layout.rowSpan   : 12
-                    Layout.columnSpan: 2
-                    Layout.preferredWidth  : gridLayout.prefWidth(this)
-                    Layout.preferredHeight : gridLayout.prefHeight(this)
-                    Column {
-                    anchors.fill: parent
-                    padding: 5
-                    spacing: 10
-                    Text { text: "FileSize"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
-                    Text { text: size; anchors.horizontalCenter: parent.horizontalCenter; }
-                    }
-                }
-                Rectangle {
-                    color : 'transparent'
-                    Layout.rowSpan   : 12
-                    Layout.columnSpan: 2
-                    Layout.preferredWidth  : gridLayout.prefWidth(this)
-                    Layout.preferredHeight : gridLayout.prefHeight(this)
-                    Column {
-                    anchors.fill: parent
-                    padding: 5
-                    spacing: 10
-                    Text { text: "Created At"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
-                    Text { text: createdAt; anchors.horizontalCenter: parent.horizontalCenter; }
-                    }
-                }
-                Rectangle {
-                    color : 'transparent'
-                    Layout.rowSpan   : 12
-                    Layout.columnSpan: 2
-                    Layout.preferredWidth  : gridLayout.prefWidth(this)
-                    Layout.preferredHeight : gridLayout.prefHeight(this)
-                    Column {
-                    anchors.fill: parent
-                    padding: 5
-                    spacing: 10
-                    Text { text: "Portrait"; anchors.horizontalCenter: parent.horizontalCenter; font.bold: true}
-                    Text { text: portrait; anchors.horizontalCenter: parent.horizontalCenter; }
-                    }
-                }
-                Rectangle {
-                    color : 'transparent'
-                    Layout.rowSpan   : 12
-                    Layout.columnSpan: 2
-                    Layout.preferredWidth  : gridLayout.prefWidth(this)
-                    Layout.preferredHeight : gridLayout.prefHeight(this)
-                    Row {
-                    anchors.fill: parent
-                    Image { source: "./assets/android-contact.png"; anchors.verticalCenter: parent.verticalCenter; width: parent.width * 0.3; height:parent.height * 0.3; fillMode: Image.PreserveAspectFit;}
-                    Image { source: "./assets/close-round.png"; anchors.verticalCenter: parent.verticalCenter; width: parent.width * 0.3; height:parent.height * 0.3; fillMode: Image.PreserveAspectFit}
-                    Image { source: "./assets/eye.png"; anchors.verticalCenter: parent.verticalCenter; width: parent.width * 0.4; height:parent.height * 0.4; fillMode: Image.PreserveAspectFit}
-                    }
+
                 }
         }
     }
