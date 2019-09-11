@@ -17,7 +17,6 @@ Item{
         spacing: 2
         section.property: "name"
         section.criteria: ViewSection.FullString
-        //the delegate for top level animals
         section.delegate: ContactHeader{}
     }
     Component {

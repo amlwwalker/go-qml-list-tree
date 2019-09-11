@@ -9,7 +9,7 @@ import "."
 ApplicationWindow {
     id: window
     width: 800; height: 600
-    title: "TreeView Example"
+    title: "Custom Tree Example"
     visible: true
 
   Layout{}
