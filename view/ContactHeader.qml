@@ -9,7 +9,7 @@ Component {
         width: root.width
         color:"white"
         height: 50
-        border.color: "hotpink"
+        border.color: "darkblue"
         Text {
             text: section
             anchors.centerIn: parent
@@ -24,7 +24,7 @@ Component {
                 sectionRectangle.border.width = 2
             }
             onExited: {
-                sectionRectangle.border.color = "hotpink"
+                sectionRectangle.border.color = "darkblue"
                 sectionRectangle.border.width = 1
             }
             onClicked: {
